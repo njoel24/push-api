@@ -13,7 +13,8 @@ async function registerServiceWorker() {
   console.log("Service Worker registered");
 
   // Subscribe to push
-  console.log("Subscribing to push notifications...");
+  setTimeout(async () => {
+    console.log("Subscribing to push notifications...");
   const subscription = await registration.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
@@ -28,8 +29,9 @@ async function registerServiceWorker() {
     headers: { "Content-Type": "application/json" },
   });
   console.log("Subscription sent to server");
+  }, 1000);
+  
 }
-
 
 // Utility to convert VAPID key
 function urlBase64ToUint8Array(base64String) {
@@ -50,13 +52,4 @@ document.getElementById("subscribe").addEventListener("click", registerServiceWo
 document.getElementById("send").addEventListener("click", async () => {
   await fetch("/sendNotification", { method: "POST" });
   console.log("Notification trigger sent to server");
-});
-
-Notification.requestPermission().then((permission) => {
-  if (permission === "granted") {
-    new Notification("Test Notification", {
-      body: "This is a direct test notification!",
-      icon: "icon.png",
-    });
-  }
 });

@@ -35,7 +35,7 @@ app.post("/subscribe", (req, res) => {
 
 // Endpoint to trigger push notifications
 app.post("/sendNotification", (req, res) => {
-  const payload = JSON.stringify({ title: "Push Notification", body: "This is a test notification." });
+  const payload = JSON.stringify({ title: "Push Notification", body: "This is a test notification.", actions: [{ action: "open", title: "Open App" }], });
   console.log("Sending payload:", payload);
   // Send notification to all subscribers
   subscriptions.forEach((sub) => {
